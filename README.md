@@ -8,6 +8,6 @@
    - create a conda `conda create -n beam-sandbox` environment, 
    - activate w/ `conda activate beam-sandbox` and 
    - install `pip install apache-beam[gcp]` 
-3. Test everything w/ 
+3. Test environment w/ 
    - `python -m apache_beam.examples.wordcount --output beam/text`, 
    - Then, `cat beam/t*` to see words and counts.
