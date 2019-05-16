@@ -7,6 +7,8 @@ root = logging.getLogger()
 root.setLevel(logging.INFO)
 
 # create a pipeline, read data from csv
+# sales transaction structure
+# id, customer-type, product-type, price
 
 # extract product-type and price
 
