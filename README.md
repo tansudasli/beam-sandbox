@@ -19,6 +19,8 @@
         - `line-count\temp` folders
    
 #### How To Run
-1. Edit Run `./run-count-dataflow.sh` on your local or on a GCP Instance
-2. Look Dataflow UI on GCP and jobs running.
+1. to run
+   - [x] `python line-count.py` on your local (uses DirectRunner), or
+   - [x]  Run `./run-count-dataflow.sh` on your local (uses DataFlowRunner) or on a GCP Instance (uses DataFlowRunner)
+2. Look Dataflow UI on GCP console and dataflow jobs running.
 3. Check logs
