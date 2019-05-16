@@ -17,6 +17,7 @@
    - Under this folder create folders for every beam file such as `line-count`
         - then, staging and temp folders such as `line-count\staging` and 
         - `line-count\temp` folders
+5- Create a dataset bucket `gs://spark-dataset-1` on GCP Storage, and upload `dataset` folder into it. Public bucket level is much better.
    
 #### How To Run
 1. to run
