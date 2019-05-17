@@ -67,7 +67,7 @@ print_size(productPrices_by_productType, "Prices by Product Type")
 # find average of prices by product-group, then print
 averagePrices_by_productType = (productPrices_by_productType
                                 | "Average by product type"
-                                >> beam.Map(lambda (k, v): (k, sum(v)/len(v)))
+                                >> beam.Map(lambda (k, v): (k, sum(v)/len(list(v))))
                                 )
 
 (averagePrices_by_productType
