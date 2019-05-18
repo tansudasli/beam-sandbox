@@ -31,7 +31,7 @@ lines = (p
          )
 
 (lines
- | "Print Product Types and Prices"
+ | "Print Word Counts"
  >> beam.ParDo(lambda (c): logging.info("Lines %s ", c))
  )
 
