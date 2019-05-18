@@ -1,0 +1,38 @@
+import logging
+import apache_beam as beam
+
+from apache_beam.options.pipeline_options import PipelineOptions
+# set logging level
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+
+# create a pipeline
+p = beam.Pipeline(options=PipelineOptions())
+
+
+class ExtractWordCount(beam.DoFn):
+
+    def process(self, element, *args, **kwargs):
+        yield (element.lower(), 1)
+
+
+lines = (p
+         | "Read Text File"
+         >> beam.io.ReadFromText("datasets/words/starwars.txt")
+         | "Get Words"
+         >> beam.FlatMap(lambda line: line.split())
+         | "Map"
+         # >> beam.Map(lambda word: (word, 1))  #both Map and ParDo is ok
+         >> beam.ParDo(ExtractWordCount())
+         | "Count words"
+         >> beam.GroupByKey()
+         | "Sum of words"
+         >> beam.Map(lambda (k, v): (k, sum(v)))
+         )
+
+(lines
+ | "Print Product Types and Prices"
+ >> beam.ParDo(lambda (c): logging.info("Lines %s ", c))
+ )
+
+p.run().wait_until_finish()
