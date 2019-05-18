@@ -18,6 +18,7 @@
         - then, staging and temp folders such as `line-count\staging` and 
         - `line-count\temp` folders
 5- Create a dataset bucket `gs://spark-dataset-1` on GCP Storage, and upload `dataset` folder into it. Public bucket level is much better.
+6- `export GOOGLE_APPLICATION_CREDENTIALS=PATH_OF_SERVICE_ACCOUNT.json`
    
 #### How To Run
 1. to run
