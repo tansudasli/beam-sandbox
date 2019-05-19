@@ -2,6 +2,7 @@ import logging
 import apache_beam as beam
 
 from apache_beam.options.pipeline_options import PipelineOptions
+
 # set logging level
 root = logging.getLogger()
 root.setLevel(logging.INFO)
