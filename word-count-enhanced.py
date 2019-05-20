@@ -22,23 +22,14 @@ class SplitWords(beam.PTransform):
     def expand(self, pcoll):
         return (pcoll
                 | beam.FlatMap(lambda line: re.findall(r'[A-Za-z]+', line))
+                | beam.combiners.Count.PerElement()
                 )
 
 
 lines = (p
-         | "Read Text File"
-         >> beam.io.ReadFromText("datasets/words/book.txt")
-         | "Get Words"
-         >> SplitWords()
-         | "Map"
-         # >> beam.Map(lambda word: (word, 1))  #both Map and ParDo is ok
-         >> beam.ParDo(ExtractWordCount())
-         | "Count words"
-         >> beam.GroupByKey()
-         | "Sum of words"
-         >> beam.Map(lambda (k, v): (k, sum(v)))
-         | "Write output File"
-         >> beam.io.WriteToText("datasets/words/book_output.txt")
+         | "Read Text File" >> beam.io.ReadFromText("datasets/words/book.txt")
+         | "Get Words" >> SplitWords()
+         | "Write output File" >> beam.io.WriteToText("datasets/words/book_output.txt")
          )
 
 (lines
