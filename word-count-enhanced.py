@@ -16,6 +16,7 @@ class ExtractWordCount(beam.DoFn):
     def process(self, element, *args, **kwargs):
         yield (element.lower(), 1)
 
+
 class SplitWords(beam.PTransform):
 
     def expand(self, pcoll):
