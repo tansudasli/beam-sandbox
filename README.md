@@ -4,10 +4,10 @@
 
 ### How To Start
 1. Enable some of the GCP APIs (dataflow api, json api, logging api, biq query api, storage api, datastore api) from GCP console UI
-2. Establish environment
+2. Establish an environment for beam
    - create a conda `conda create -n beam-sandbox` environment, 
    - activate w/ `conda activate beam-sandbox` and 
-   - install `pip install apache-beam[gcp]` 
+   - install `pip install apache-beam[gcp, test]` for GCP & Test additions 
 3. Test environment w/ 
    - `python -m apache_beam.examples.wordcount --output beam/text`, 
    - Then, `cat beam/t*` to see words and counts.
