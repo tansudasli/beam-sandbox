@@ -11,13 +11,7 @@ logging.getLogger().setLevel(logging.INFO)
 p = beam.Pipeline(options=PipelineOptions())
 
 
-class ExtractWordCount(beam.DoFn):
-
-    def process(self, element, *args, **kwargs):
-        yield (element.lower(), 1)
-
-
-class SplitWords(beam.PTransform):
+class CountWords(beam.PTransform):
 
     def expand(self, pcoll):
         return (pcoll
@@ -28,7 +22,7 @@ class SplitWords(beam.PTransform):
 
 lines = (p
          | "Read Text File" >> beam.io.ReadFromText("datasets/words/book.txt")
-         | "Get Words" >> SplitWords()
+         | "Get Words" >> CountWords()
          | "Write output File" >> beam.io.WriteToText("datasets/words/book_output.txt")
          )
 
