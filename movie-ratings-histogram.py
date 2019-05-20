@@ -18,9 +18,9 @@ lines = (p
          >> beam.Map(lambda line: line.split("\t"))
          | "Get Ratings"
          >> beam.Map(lambda line: (line[2], 1))
-         | "Count by Value"
+         | "Group by Rating"
          >> beam.GroupByKey()
-         | "Count"
+         | "Count by Value"
          >> beam.Map(lambda (k, v): (k, len(v)))
          )
 
