@@ -1,7 +1,10 @@
 import logging
 import apache_beam as beam
 import re
-import argparse
+
+from apache_beam.testing.test_pipeline import TestPipeline
+from apache_beam.testing.util import assert_that
+from apache_beam.testing.util import equal_to
 
 from apache_beam.options.pipeline_options import PipelineOptions
 
@@ -31,7 +34,7 @@ class CountWords(beam.PTransform):
                 )
 
 
-# create a pipeline
+# create a pipeline w/ CLI params
 options = PipelineOptions(argv=None)
 word_count_options = options.view_as(WordCountOptions)
 
@@ -43,6 +46,12 @@ lines = (p
          | "Get Words" >> CountWords()
          | "Write output File" >> beam.io.WriteToText(word_count_options.output)
          )
+
+# Unit Tests
+with TestPipeline() as pTest:
+    assert_that(pTest | beam.Create(["Making inertia", "Overcoming Inertia"])
+                      | CountWords(),
+                equal_to([("overcoming", 1), ("inertia", 2), ("making", 1)]))
 
 (lines
  | "Print Word Counts"
