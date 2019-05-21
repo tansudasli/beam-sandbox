@@ -38,6 +38,12 @@ class CountWords(beam.PTransform):
 options = PipelineOptions(argv=None)
 word_count_options = options.view_as(WordCountOptions)
 
+# Unit Tests
+with TestPipeline() as p:
+    assert_that(p | beam.Create(["Making inertia", "Overcoming Inertia"])
+                  | CountWords(),
+                equal_to([("overcoming", 1), ("inertia", 2), ("making", 1)]))
+
 p = beam.Pipeline(options=options)
 
 
@@ -47,11 +53,6 @@ lines = (p
          | "Write output File" >> beam.io.WriteToText(word_count_options.output)
          )
 
-# Unit Tests
-with TestPipeline() as pTest:
-    assert_that(pTest | beam.Create(["Making inertia", "Overcoming Inertia"])
-                      | CountWords(),
-                equal_to([("overcoming", 1), ("inertia", 2), ("making", 1)]))
 
 (lines
  | "Print Word Counts"
