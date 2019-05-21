@@ -1,14 +1,12 @@
 import logging
 import apache_beam as beam
 import re
+import argparse
 
 from apache_beam.options.pipeline_options import PipelineOptions
 
 # set logging level
 logging.getLogger().setLevel(logging.INFO)
-
-# create a pipeline
-p = beam.Pipeline(options=PipelineOptions())
 
 
 # parameterize
@@ -16,7 +14,10 @@ class WordCountOptions(PipelineOptions):
 
     @classmethod
     def _add_argparse_args(cls, parser):
-        super(WordCountOptions, cls)._add_argparse_args(parser)
+        # super(WordCountOptions, cls)._add_argparse_args(parser)
+        parser.add_argument("--input", help="", default="datasets/words/book.txt")
+        parser.add_argument("--output", help="", default="datasets/words/book_output.txt")
+        # parser.parse_known_args(argv)
 
 
 # composite transformation
@@ -25,14 +26,22 @@ class CountWords(beam.PTransform):
     def expand(self, pcoll):
         return (pcoll
                 | beam.FlatMap(lambda line: re.findall(r'[A-Za-z]+', line))
+                | beam.Map(lambda word: (word.lower()))
                 | beam.combiners.Count.PerElement()
                 )
 
 
+# create a pipeline
+options = PipelineOptions(argv=None)
+word_count_options = options.view_as(WordCountOptions)
+
+p = beam.Pipeline(options=options)
+
+
 lines = (p
-         | "Read Text File" >> beam.io.ReadFromText("datasets/words/book.txt")
+         | "Read Text File" >> beam.io.ReadFromText(word_count_options.input)
          | "Get Words" >> CountWords()
-         | "Write output File" >> beam.io.WriteToText("datasets/words/book_output.txt")
+         | "Write output File" >> beam.io.WriteToText(word_count_options.output)
          )
 
 (lines
