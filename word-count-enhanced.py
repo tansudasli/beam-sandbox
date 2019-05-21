@@ -11,6 +11,15 @@ logging.getLogger().setLevel(logging.INFO)
 p = beam.Pipeline(options=PipelineOptions())
 
 
+# parameterize
+class WordCountOptions(PipelineOptions):
+
+    @classmethod
+    def _add_argparse_args(cls, parser):
+        super(WordCountOptions, cls)._add_argparse_args(parser)
+
+
+# composite transformation
 class CountWords(beam.PTransform):
 
     def expand(self, pcoll):
