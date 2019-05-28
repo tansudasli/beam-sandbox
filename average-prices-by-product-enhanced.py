@@ -6,8 +6,7 @@ from apache_beam.options.pipeline_options import PipelineOptions
 
 
 # logging
-root = logging.getLogger()
-root.setLevel(logging.INFO)
+logging.getLogger().setLevel(logging.INFO)
 
 
 # create a pipeline, read data from csv
