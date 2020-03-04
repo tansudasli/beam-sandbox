@@ -3,6 +3,7 @@
 
 
 ### How To Start
+
 1. Enable some of the GCP APIs (dataflow api, json api, logging api, biq query api, storage api, datastore api) from GCP console UI
 2. Establish an environment for beam
    - create a conda `conda create -n beam-sandbox` environment, 
@@ -21,8 +22,9 @@
 6. `export GOOGLE_APPLICATION_CREDENTIALS=PATH_OF_SERVICE_ACCOUNT.json`
    
 #### How To Run
+
 1. to run
    - [x] `python line-count.py` on your local (uses DirectRunner), or
-   - [x]  Run `./run-count-dataflow.sh` on your local (uses DataFlowRunner) or on a GCP Instance (uses DataFlowRunner)
+   - [x]  Run on your local or GCP shell/Instance `./line-count-dataflow.sh` (uses DataFlowRunner)
 2. Look Dataflow UI on GCP console and dataflow jobs running.
 3. Check logs
